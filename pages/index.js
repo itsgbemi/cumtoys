@@ -6,6 +6,7 @@ export default function CumToysStore() {
   const [isMobile, setIsMobile] = useState(false);
   const [activeFooterSections, setActiveFooterSections] = useState({});
   const [isAgeVerified, setIsAgeVerified] = useState(false);
+  const [isUnder18, setIsUnder18] = useState(false);
 
   useEffect(() => {
     const handleResize = () => { setIsMobile(window.innerWidth <= 768); };
@@ -18,12 +19,8 @@ export default function CumToysStore() {
     setActiveFooterSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const handleUnder18 = () => {
-    window.location.href = 'https://www.google.com'; // Redirect to safe site
-  };
-
   const styles = {
-    root: { '--font-xs': '0.75rem', '--font-sm': '0.875rem', '--font-base': '1rem', '--font-lg': '1.125rem', '--font-xl': '1.25rem', '--font-2xl': '1.5rem', '--font-3xl': '1.875rem', '--font-4xl': '2.25rem', '--font-5xl': '3rem', '--font-6xl': '3.75rem', '--color-black': '#000', '--color-white': '#fff', '--color-gray-100': '#f3f4f6', '--color-gray-200': '#e5e7eb', '--color-gray-300': '#d1d5db', '--color-gray-400': '#9ca3af', '--color-gray-500': '#6b7280', '--color-gray-600': '#4b5563', '--color-gray-700': '#374151', '--color-gray-800': '#1f2937', '--color-gray-900': '#111827', '--color-red-500': '#ef4444', '--color-red-600': '#dc2626', '--color-green-500': '#10b981' },
+    root: { '--font-xs': '0.75rem', '--font-sm': '0.875rem', '--font-base': '1rem', '--font-lg': '1.125rem', '--font-xl': '1.25rem', '--font-2xl': '1.5rem', '--font-3xl': '1.875rem', '--font-4xl': '2.25rem', '--font-5xl': '3rem', '--font-6xl': '3.75rem', '--color-black': '#000', '--color-white': '#fff', '--color-gray-100': '#f3f4f6', '--color-gray-200': '#e5e7eb', '--color-gray-300': '#d1d5db', '--color-gray-400': '#9ca3af', '--color-gray-500': '#6b7280', '--color-gray-600': '#4b5563', '--color-gray-700': '#374151', '--color-gray-800': '#1f2937', '--color-gray-900': '#111827', '--color-red-500': '#ef4444', '--color-red-600': '#dc2626' },
     global: { margin: 0, padding: 0, boxSizing: 'border-box', fontFamily: "'Inter', sans-serif", lineHeight: 1.6, color: 'var(--color-white)' },
     preHeader: { backgroundColor: 'var(--color-black)', padding: '8px 20px', display: 'flex', gap: '10px', justifyContent: 'space-between', alignItems: 'center' },
     shopNowBtn: { backgroundColor: 'var(--color-red-500)', color: 'var(--color-black)', padding: '6px 12px', border: 'none', fontSize: '0.6rem', fontWeight: 500, letterSpacing: '0.03em', minWidth: '80px', textAlign: 'center', textDecoration: 'none', display: 'inline-block', transition: 'background-color 0.3s', cursor: 'pointer' },
@@ -36,7 +33,6 @@ export default function CumToysStore() {
     footerList: { listStyle: 'none', overflow: 'hidden', transition: 'max-height 0.3s ease', maxHeight: isMobile ? 0 : '1000px' },
     activeFooterList: { maxHeight: '1000px' },
     footerBottom: { textAlign: isMobile ? 'left' : 'center', marginTop: '40px', paddingTop: '20px', borderTop: '1px solid #444', fontSize: 'var(--font-sm)' },
-    // Updated age gate styles
     ageGate: { 
       position: 'fixed', 
       top: 0, 
@@ -45,74 +41,79 @@ export default function CumToysStore() {
       height: '100%', 
       backgroundColor: 'rgba(0,0,0,0.9)', 
       display: 'flex', 
+      flexDirection: 'column', 
       justifyContent: 'center', 
       alignItems: 'center', 
       zIndex: 1000 
     },
     ageGateContent: {
-      backgroundColor: 'var(--color-gray-800)',
-      borderRadius: '9999px', // Pill shape
+      backgroundColor: 'var(--color-black)',
       padding: '40px',
-      maxWidth: '600px',
+      borderRadius: '8px',
+      boxShadow: '0 4px 20px rgba(255, 255, 255, 0.1)',
+      maxWidth: '500px',
       width: '90%',
-      textAlign: 'center',
-      boxShadow: '0 10px 25px rgba(0, 0, 0, 0.5)'
+      textAlign: 'center'
     },
-    ageGateTitle: { 
-      color: 'white', 
-      fontSize: '2rem', 
-      marginBottom: '20px' 
-    },
-    ageGateText: { 
-      color: 'white', 
-      maxWidth: '500px', 
-      margin: '20px auto', 
-      lineHeight: '1.6' 
-    },
-    ageGateButtonGroup: {
+    ageGateButtons: {
       display: 'flex',
-      justifyContent: 'center',
       gap: '20px',
+      justifyContent: 'center',
       marginTop: '30px'
     },
     ageGateButton: { 
       padding: '15px 30px', 
-      fontSize: '1.2rem', 
+      fontSize: '1rem', 
       cursor: 'pointer', 
-      border: 'none',
-      borderRadius: '9999px',
+      borderRadius: '4px',
       fontWeight: 'bold',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.3s'
     },
-    ageGateButtonConfirm: {
-      backgroundColor: 'var(--color-green-500)',
-      color: 'white'
+    ageGateConfirm: {
+      backgroundColor: 'var(--color-white)',
+      color: 'var(--color-black)',
+      border: 'none'
     },
-    ageGateButtonDeny: {
-      backgroundColor: 'var(--color-red-600)',
-      color: 'white'
+    ageGateDeny: {
+      backgroundColor: 'transparent',
+      color: 'var(--color-white)',
+      border: '2px solid var(--color-white)'
+    },
+    ageGateTitle: {
+      color: 'var(--color-red-500)',
+      fontSize: '2rem',
+      marginBottom: '20px',
+      fontWeight: 'bold'
     }
   };
+
+  if (isUnder18) {
+    return (
+      <div style={{ ...styles.global, ...styles.ageGate }}>
+        <div style={styles.ageGateContent}>
+          <h2 style={styles.ageGateTitle}>18+ ONLY</h2>
+          <p style={{ color: 'white', margin: '20px 0' }}>You must be 18 or older to access this site.</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!isAgeVerified) {
     return (
       <div style={{ ...styles.global, ...styles.ageGate }}>
         <div style={styles.ageGateContent}>
-          <h2 style={styles.ageGateTitle}>ADULT CONTENT WARNING</h2>
-          <p style={styles.ageGateText}>
-            This website contains explicit adult material and is only for individuals 18 years or older.
-            By entering, you confirm that you are at least 18 years of age or the legal age in your jurisdiction.
-          </p>
-          <div style={styles.ageGateButtonGroup}>
+          <h2 style={styles.ageGateTitle}>18+ ONLY</h2>
+          <p style={{ color: 'white', margin: '20px 0' }}>This website contains adult material and is only for those 18 years or older.</p>
+          <div style={styles.ageGateButtons}>
             <button 
-              style={{ ...styles.ageGateButton, ...styles.ageGateButtonConfirm }} 
+              style={{ ...styles.ageGateButton, ...styles.ageGateConfirm }} 
               onClick={() => setIsAgeVerified(true)}
             >
-              I'M OVER 18
+              I'M 18+
             </button>
             <button 
-              style={{ ...styles.ageGateButton, ...styles.ageGateButtonDeny }} 
-              onClick={handleUnder18}
+              style={{ ...styles.ageGateButton, ...styles.ageGateDeny }} 
+              onClick={() => setIsUnder18(true)}
             >
               I'M UNDER 18
             </button>
