@@ -33,23 +33,20 @@ footerList: { listStyle: 'none', overflow: 'hidden', transition: 'max-height 0.3
 activeFooterList: { maxHeight: '1000px' },
 footerBottom: { textAlign: isMobile ? 'left' : 'center', marginTop: '40px', paddingTop: '20px', borderTop: '1px solid #444', fontSize: 'var(--font-sm)' },
 ageGate: { position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.9)', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', zIndex: 1000 },
-ageGateContent: { backgroundColor: 'var(--color-gray-800)', padding: '40px', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.5)', maxWidth: '500px', width: '90%', textAlign: 'center' },
-ageGateButton: { padding: '15px 30px', backgroundColor: 'white', color: 'black', border: 'none', fontSize: isMobile ? '1rem' : '1.2rem', cursor: 'pointer', margin: '10px', fontWeight: 'bold', borderRadius: '4px' },
-ageGateButtonSecondary: { padding: '15px 30px', backgroundColor: 'transparent', color: 'white', border: '2px solid white', fontSize: isMobile ? '1rem' : '1.2rem', cursor: 'pointer', margin: '10px', fontWeight: 'bold', borderRadius: '4px' },
-ageWarning: { color: 'var(--color-red-500)', fontSize: isMobile ? '1.2rem' : '1.5rem', fontWeight: 'bold', margin: '20px 0' }
+ageGateButton: { padding: '15px 30px', backgroundColor: 'white', color: 'black', border: 'none', fontSize: '1.2rem', cursor: 'pointer', margin: '10px', fontWeight: 'bold', borderRadius: '4px' },
+ageGateButtonSecondary: { padding: '15px 30px', backgroundColor: 'transparent', color: 'white', border: '2px solid white', fontSize: '1.2rem', cursor: 'pointer', margin: '10px', fontWeight: 'bold', borderRadius: '4px' },
+ageWarning: { color: 'var(--color-red-500)', fontSize: '1.5rem', fontWeight: 'bold', margin: '20px 0' }
 };
 
 if (!isAgeVerified) {
 return (
 <div style={{ ...styles.global, ...styles.ageGate }}>
-<div style={styles.ageGateContent}>
-<h2 style={{ color: 'white', fontSize: isMobile ? '1.5rem' : '2rem', marginBottom: '15px' }}>ADULT CONTENT WARNING</h2>
-<p style={{ color: 'white', fontSize: isMobile ? '0.9rem' : '1rem', margin: '15px 0' }}>This website contains adult material and is only for those 18 years or older.</p>
+<h2 style={{ color: 'white', fontSize: '2rem', textAlign: 'center' }}>ADULT CONTENT WARNING</h2>
+<p style={{ color: 'white', maxWidth: '500px', textAlign: 'center', margin: '20px 0' }}>This website contains adult material and is only for those 18 years or older.</p>
 <div style={styles.ageWarning}>18+ ONLY</div>
-<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', justifyContent: 'center', alignItems: 'center' }}>
+<div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'center' }}>
 <button style={styles.ageGateButton} onClick={() => setIsAgeVerified(true)}>I AM OVER 18</button>
 <button style={styles.ageGateButtonSecondary} onClick={() => window.location.href = 'https://www.google.com'}>I AM UNDER 18</button>
-</div>
 </div>
 </div>
 );
